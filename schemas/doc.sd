@@ -1,0 +1,81 @@
+schema doc {
+
+    document doc {
+
+        field text type string {
+            indexing: summary | index
+            index: enable-bm25
+
+        }
+
+        field color type string {
+            indexing: summary | index
+            rank: filter
+        }
+
+    }
+
+    field embedding type tensor<float>(x[384]) {
+        indexing: input text | embed bert | attribute | index
+        attribute {
+            distance-metric: euclidean
+        }
+        index: hnsw
+    }
+
+    rank-profile pure_neural_rank {
+        num-threads-per-search: 1
+
+        inputs {
+            query(first_query) tensor<float>(x[384])
+            query(second_query) tensor<float>(x[384])
+        }
+        first-phase {
+            expression: closeness(field, embedding)
+        }
+        match-features {
+            closeness(field, embedding)         
+            closeness(label, first_query) 
+            closeness(label, second_query)
+            distance(field,embedding)
+        }
+
+    }
+
+    rank-profile hybrid_rank inherits pure_neural_rank {
+        inputs {
+            query(textWeight) : 1.0
+            query(vectorWeight) : 1.0
+        }
+        first-phase {
+            expression {
+                query(textWeight) * bm25(text) +
+                query(vectorWeight) * closeness(field, embedding)
+            }
+        }
+        match-features {
+            closeness(field, embedding)
+            bm25(text)
+        }
+    }
+
+    rank-profile neural_rank_sum_closeness {
+        num-threads-per-search: 1
+
+        inputs {
+            query(first_query) tensor<float>(x[384])
+            query(second_query) tensor<float>(x[384])
+        }
+        first-phase {
+            expression: closeness(label, first_query) + closeness(label, second_query)
+
+        }
+        match-features {
+            closeness(field, embedding)
+            closeness(label, first_query) 
+            closeness(label, second_query)
+        }
+
+    }
+
+}
