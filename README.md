@@ -17,7 +17,7 @@ To create documents and models by yourself you also need:
   - **[msmarco_documents](documents/msmarco_documents)**: contains the MS Marco data
   - **[vespa_documents](documents/vespa_documents)**: contains the Vespa documents
 - **[model](model)**: contains the export_model.py python script to export the all-MiniLM-L6-v2 sentence transformer from HuggingFace in an ONNX format.
-  - **[files](files)**: contains the all-MiniLM-L6-v2 model (minilm-l6-v2.onnx) and its vocabulary (vocab.txt)
+  - **[files](model/files)**: contains the all-MiniLM-L6-v2 model (minilm-l6-v2.onnx) and its vocabulary (vocab.txt)
 - **[schemas](schemas)**: contains the documents schema
 - **[services-xml](services.xml)**: is the Vespa configuration file that defines the services that make up the application
 - **[vespa-feed-client-cli](vespa-feed-client-cli)**: is the folder containing the vespa-feed-client library
