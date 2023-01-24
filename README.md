@@ -10,6 +10,7 @@ To directly use the existing material, without generating documents and models b
 
 To create documents and models by yourself you also need:
 - python 3.10
+- torch 1.13.1
 - transformers 4.25.1
 
 ## Repository content ##
