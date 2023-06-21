@@ -6,7 +6,7 @@ For a step-by-step description read our blog post.
 
 ## Requirements ##
 To directly use the existing material, without generating documents and models by yourself, you only need:
-- vespa-cli 8.109.47
+- vespa-cli 8.171.4
 
 To create documents and models by yourself you also need:
 - python 3.10
