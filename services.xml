@@ -4,12 +4,10 @@
     <!-- See https://docs.vespa.ai/en/reference/services-container.html -->
     <container id="default" version="1.0">
 
-        <!-- See https://docs.vespa.ai/en/embedding.html#bertbase-embedder -->
-        <component id="bert" class="ai.vespa.embedding.BertBaseEmbedder" bundle="model-integration">
-            <config name="embedding.bert-base-embedder">
-                <transformerModel path="model/files/minilm-l6-v2.onnx"/>
-                <tokenizerVocab path="model/files/vocab.txt"/>
-            </config>
+        <!-- See https://docs.vespa.ai/en/reference/embedding-reference.html#custom-embedders -->
+        <component id="bert" type="bert-embedder">
+            <transformer-model path="model/files/sentence-transformers-all-MiniLM-L6-v2.onnx"/>
+            <tokenizer-vocab path="model/files/vocab.txt"/>
         </component>
 
         <document-api/>

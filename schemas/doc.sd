@@ -8,6 +8,10 @@ schema doc {
 
         }
 
+        field paragraphs type array<string> {
+            indexing: index | summary
+        }
+
         field color type string {
             indexing: summary | index
             rank: filter
@@ -17,6 +21,14 @@ schema doc {
 
     field embedding type tensor<float>(x[384]) {
         indexing: input text | embed bert | attribute | index
+        attribute {
+            distance-metric: euclidean
+        }
+        index: hnsw
+    }
+
+    field multiple_embeddings type tensor<float>(p{}, x[384]) {
+        indexing: input paragraphs | embed bert | attribute | index
         attribute {
             distance-metric: euclidean
         }
@@ -38,6 +50,21 @@ schema doc {
             closeness(label, first_query) 
             closeness(label, second_query)
             distance(field,embedding)
+        }
+
+    }
+
+    rank-profile multiple_pure_neural_rank {
+        num-threads-per-search: 1
+
+        inputs {
+            query(first_query) tensor<float>(x[384])
+        }
+        first-phase {
+            expression: cos(distance(field, multiple_embeddings))
+        }
+        match-features {
+            closest(multiple_embeddings)
         }
 
     }
