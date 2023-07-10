@@ -61,9 +61,10 @@ schema doc {
             query(first_query) tensor<float>(x[384])
         }
         first-phase {
-            expression: cos(distance(field, multiple_embeddings))
+            expression: closeness(field, multiple_embeddings)
         }
         match-features {
+            closeness(field, multiple_embeddings)  
             closest(multiple_embeddings)
         }
 
