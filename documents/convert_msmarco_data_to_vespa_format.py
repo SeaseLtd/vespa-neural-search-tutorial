@@ -1,4 +1,5 @@
 import random
+from ftfy import fix_text
 
 if __name__ == "__main__":
     fields_list = ["id", "text", "color"]
@@ -10,7 +11,7 @@ if __name__ == "__main__":
     count = 1
     for line in input_file.readlines():
         text = line.split("\t")[1]
-        text_cleaned = text.replace("\\d", "d").replace("\\", "")[:-1]
+        text_cleaned = fix_text(text.replace("\\d", "d").replace("\\", "")[:-1]).replace('"', '\\"')
         paragraphs = text_cleaned.split(".")
         paragraphs.pop()
         categorical_value = random.randint(0, 7)
@@ -20,7 +21,7 @@ if __name__ == "__main__":
             paragraphs.append(text_cleaned)
         document = document + "\"paragraphs\": ["
         for paragraph in paragraphs:
-            document = document + "\"" + paragraph.replace("\\d", "d").replace("\\", "") + ".\","
+            document = document + "\"" + paragraph + ".\","
         document = document[:-1] + "],"
         document = document + "\"color\": \"" + categorical_list[categorical_value] + "\"}"
         document = document + "}\n"
