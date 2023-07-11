@@ -1,0 +1,339 @@
+{
+	"info": {
+		"_postman_id": "ba3eaa73-1181-477c-8453-36b57f3f645f",
+		"name": "Vespa",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Exact Nearest Neighbor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/search/?yql=select%20*%20from%20doc%20where%20%0A%7Bapproximate%3Afalse%2CtargetHits%3A%20100%7DnearestNeighbor(embedding%2C%20first_query)&input.query(first_query)=embed(%23of%20calories%20to%20eat%20to%20lose%20weight)&ranking=pure_neural_rank",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"search",
+						""
+					],
+					"query": [
+						{
+							"key": "yql",
+							"value": "select%20*%20from%20doc%20where%20%0A%7Bapproximate%3Afalse%2CtargetHits%3A%20100%7DnearestNeighbor(embedding%2C%20first_query)"
+						},
+						{
+							"key": "input.query(first_query)",
+							"value": "embed(%23of%20calories%20to%20eat%20to%20lose%20weight)"
+						},
+						{
+							"key": "ranking",
+							"value": "pure_neural_rank"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Approximate Nearest Neighbor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/search/?yql=select%20*%20from%20doc%20where%20%0A%7BtargetHits%3A%20100%7DnearestNeighbor(embedding%2C%20first_query)&input.query(first_query)=embed(%23of%20calories%20to%20eat%20to%20lose%20weight)&ranking=pure_neural_rank",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"search",
+						""
+					],
+					"query": [
+						{
+							"key": "yql",
+							"value": "select%20*%20from%20doc%20where%20%0A%7BtargetHits%3A%20100%7DnearestNeighbor(embedding%2C%20first_query)"
+						},
+						{
+							"key": "input.query(first_query)",
+							"value": "embed(%23of%20calories%20to%20eat%20to%20lose%20weight)"
+						},
+						{
+							"key": "ranking",
+							"value": "pure_neural_rank"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ANN with Filters",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/search/?yql=select%20*%20from%20doc%20where%20%0A%7BtargetHits%3A%20100%7DnearestNeighbor(embedding%2C%20first_query)%20AND%20color%20contains%20%27yellow%27&input.query(first_query)=embed(%23of%20calories%20to%20eat%20to%20lose%20weight)&ranking=pure_neural_rank",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"search",
+						""
+					],
+					"query": [
+						{
+							"key": "yql",
+							"value": "select%20*%20from%20doc%20where%20%0A%7BtargetHits%3A%20100%7DnearestNeighbor(embedding%2C%20first_query)%20AND%20color%20contains%20%27yellow%27"
+						},
+						{
+							"key": "input.query(first_query)",
+							"value": "embed(%23of%20calories%20to%20eat%20to%20lose%20weight)"
+						},
+						{
+							"key": "ranking",
+							"value": "pure_neural_rank"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Distance threshold",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/search/?yql=select%20*%20from%20doc%20where%20%0A%7BdistanceThreshold%3A%205.0%2C%20targetHits%3A%20100%7DnearestNeighbor(embedding%2C%20first_query)%20AND%20color%20contains%20%27yellow%27&input.query(first_query)=embed(%23of%20calories%20to%20eat%20to%20lose%20weight)&ranking=pure_neural_rank",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"search",
+						""
+					],
+					"query": [
+						{
+							"key": "yql",
+							"value": "select%20*%20from%20doc%20where%20%0A%7BdistanceThreshold%3A%205.0%2C%20targetHits%3A%20100%7DnearestNeighbor(embedding%2C%20first_query)%20AND%20color%20contains%20%27yellow%27"
+						},
+						{
+							"key": "input.query(first_query)",
+							"value": "embed(%23of%20calories%20to%20eat%20to%20lose%20weight)"
+						},
+						{
+							"key": "ranking",
+							"value": "pure_neural_rank"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hybrid Sparse and Dense Retrieval",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/search/?yql=select%20*%20from%20doc%20where%20%0A%7BtargetHits%3A%20100%7DnearestNeighbor(embedding%2C%20first_query)%20OR%20text%20contains%20%27exercise%27&type=weakAnd&ranking=hybrid_rank&input.query(first_query)=embed(%23of%20calories%20to%20eat%20to%20lose%20weight)",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"search",
+						""
+					],
+					"query": [
+						{
+							"key": "yql",
+							"value": "select%20*%20from%20doc%20where%20%0A%7BtargetHits%3A%20100%7DnearestNeighbor(embedding%2C%20first_query)%20OR%20text%20contains%20%27exercise%27"
+						},
+						{
+							"key": "type",
+							"value": "weakAnd"
+						},
+						{
+							"key": "ranking",
+							"value": "hybrid_rank"
+						},
+						{
+							"key": "input.query(first_query)",
+							"value": "embed(%23of%20calories%20to%20eat%20to%20lose%20weight)"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hybrid with Weights",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/search/?yql=select%20*%20from%20doc%20where%20%0A%7BtargetHits%3A%20100%7DnearestNeighbor(embedding%2C%20first_query)%20OR%20text%20contains%20%27exercise%27&type=weakAnd&ranking=hybrid_rank&input.query(first_query)=embed(%23of%20calories%20to%20eat%20to%20lose%20weight)&ranking.features.query(textWeight)=0.5&ranking.features.query(vectorWeight)=30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"search",
+						""
+					],
+					"query": [
+						{
+							"key": "yql",
+							"value": "select%20*%20from%20doc%20where%20%0A%7BtargetHits%3A%20100%7DnearestNeighbor(embedding%2C%20first_query)%20OR%20text%20contains%20%27exercise%27"
+						},
+						{
+							"key": "type",
+							"value": "weakAnd"
+						},
+						{
+							"key": "ranking",
+							"value": "hybrid_rank"
+						},
+						{
+							"key": "input.query(first_query)",
+							"value": "embed(%23of%20calories%20to%20eat%20to%20lose%20weight)"
+						},
+						{
+							"key": "ranking.features.query(textWeight)",
+							"value": "0.5"
+						},
+						{
+							"key": "ranking.features.query(vectorWeight)",
+							"value": "30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Multiple Queries",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/search/?yql=select%20*%20from%20doc%20where%20(%7Blabel%3A%27first_query%27%2C%20targetHits%3A100%7DnearestNeighbor(embedding%2C%20first_query))%20OR%20(%7Blabel%3A%27second_query%27%2C%20targetHits%3A100%7DnearestNeighbor(embedding%2C%20second_query))&ranking=pure_neural_rank&input.query(first_query)=embed(%23of%20calories%20to%20eat%20to%20lose%20weight)&input.query(second_query)=embed(diet%20zone%20strategy)",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"search",
+						""
+					],
+					"query": [
+						{
+							"key": "yql",
+							"value": "select%20*%20from%20doc%20where%20(%7Blabel%3A%27first_query%27%2C%20targetHits%3A100%7DnearestNeighbor(embedding%2C%20first_query))%20OR%20(%7Blabel%3A%27second_query%27%2C%20targetHits%3A100%7DnearestNeighbor(embedding%2C%20second_query))"
+						},
+						{
+							"key": "ranking",
+							"value": "pure_neural_rank"
+						},
+						{
+							"key": "input.query(first_query)",
+							"value": "embed(%23of%20calories%20to%20eat%20to%20lose%20weight)"
+						},
+						{
+							"key": "input.query(second_query)",
+							"value": "embed(diet%20zone%20strategy)"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Multiple Queries Sum of Closeness",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/search/?yql=select%20*%20from%20doc%20where%20(%7Blabel%3A%27first_query%27%2C%20targetHits%3A100%7DnearestNeighbor(embedding%2C%20first_query))%20OR%20(%7Blabel%3A%27second_query%27%2C%20targetHits%3A100%7DnearestNeighbor(embedding%2C%20second_query))&ranking=neural_rank_sum_closeness&input.query(first_query)=embed(%23of%20calories%20to%20eat%20to%20lose%20weight)&input.query(second_query)=embed(diet%20zone%20strategy)",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"search",
+						""
+					],
+					"query": [
+						{
+							"key": "yql",
+							"value": "select%20*%20from%20doc%20where%20(%7Blabel%3A%27first_query%27%2C%20targetHits%3A100%7DnearestNeighbor(embedding%2C%20first_query))%20OR%20(%7Blabel%3A%27second_query%27%2C%20targetHits%3A100%7DnearestNeighbor(embedding%2C%20second_query))"
+						},
+						{
+							"key": "ranking",
+							"value": "neural_rank_sum_closeness"
+						},
+						{
+							"key": "input.query(first_query)",
+							"value": "embed(%23of%20calories%20to%20eat%20to%20lose%20weight)"
+						},
+						{
+							"key": "input.query(second_query)",
+							"value": "embed(diet%20zone%20strategy)"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Multi-vector Search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/search/?yql=select%20*%20from%20doc%20where%20%0A%7BtargetHits%3A%20100%7DnearestNeighbor(multiple_embeddings%2C%20first_query)&input.query(first_query)=embed(%23of%20calories%20to%20eat%20to%20lose%20weight)&ranking=multiple_pure_neural_rank",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"search",
+						""
+					],
+					"query": [
+						{
+							"key": "yql",
+							"value": "select%20*%20from%20doc%20where%20%0A%7BtargetHits%3A%20100%7DnearestNeighbor(multiple_embeddings%2C%20first_query)"
+						},
+						{
+							"key": "input.query(first_query)",
+							"value": "embed(%23of%20calories%20to%20eat%20to%20lose%20weight)"
+						},
+						{
+							"key": "ranking",
+							"value": "multiple_pure_neural_rank"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
