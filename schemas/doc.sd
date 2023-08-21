@@ -9,7 +9,7 @@ schema doc {
         }
 
         field paragraphs type array<string> {
-            indexing: index | summary
+            indexing: summary | index
         }
 
         field color type string {
@@ -49,7 +49,7 @@ schema doc {
             closeness(field, embedding)         
             closeness(label, first_query) 
             closeness(label, second_query)
-            distance(field,embedding)
+            distance(field, embedding)
         }
 
     }

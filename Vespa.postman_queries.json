@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "ba3eaa73-1181-477c-8453-36b57f3f645f",
+		"_postman_id": "4b5e448e-c504-4c3a-aab5-a60b8bb0d0c6",
 		"name": "Vespa",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12251772"
 	},
 	"item": [
 		{
@@ -113,7 +114,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/search/?yql=select%20*%20from%20doc%20where%20%0A%7BdistanceThreshold%3A%205.0%2C%20targetHits%3A%20100%7DnearestNeighbor(embedding%2C%20first_query)%20AND%20color%20contains%20%27yellow%27&input.query(first_query)=embed(%23of%20calories%20to%20eat%20to%20lose%20weight)&ranking=pure_neural_rank",
+					"raw": "http://localhost:8080/search/?yql=select%20*%20from%20doc%20where%20%0A%7BdistanceThreshold%3A%205.2%2C%20targetHits%3A%20100%7DnearestNeighbor(embedding%2C%20first_query)%20AND%20color%20contains%20%27yellow%27&input.query(first_query)=embed(%23of%20calories%20to%20eat%20to%20lose%20weight)&ranking=pure_neural_rank",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -126,7 +127,7 @@
 					"query": [
 						{
 							"key": "yql",
-							"value": "select%20*%20from%20doc%20where%20%0A%7BdistanceThreshold%3A%205.0%2C%20targetHits%3A%20100%7DnearestNeighbor(embedding%2C%20first_query)%20AND%20color%20contains%20%27yellow%27"
+							"value": "select%20*%20from%20doc%20where%20%0A%7BdistanceThreshold%3A%205.2%2C%20targetHits%3A%20100%7DnearestNeighbor(embedding%2C%20first_query)%20AND%20color%20contains%20%27yellow%27"
 						},
 						{
 							"key": "input.query(first_query)",
@@ -226,6 +227,40 @@
 			"response": []
 		},
 		{
+			"name": "Multi-vector Search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/search/?yql=select%20*%20from%20doc%20where%20%0A%7BtargetHits%3A%20100%7DnearestNeighbor(multiple_embeddings%2C%20first_query)&input.query(first_query)=embed(%23of%20calories%20to%20eat%20to%20lose%20weight)&ranking=multiple_pure_neural_rank",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"search",
+						""
+					],
+					"query": [
+						{
+							"key": "yql",
+							"value": "select%20*%20from%20doc%20where%20%0A%7BtargetHits%3A%20100%7DnearestNeighbor(multiple_embeddings%2C%20first_query)"
+						},
+						{
+							"key": "input.query(first_query)",
+							"value": "embed(%23of%20calories%20to%20eat%20to%20lose%20weight)"
+						},
+						{
+							"key": "ranking",
+							"value": "multiple_pure_neural_rank"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Multiple Queries",
 			"request": {
 				"method": "GET",
@@ -295,40 +330,6 @@
 						{
 							"key": "input.query(second_query)",
 							"value": "embed(diet%20zone%20strategy)"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Multi-vector Search",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/search/?yql=select%20*%20from%20doc%20where%20%0A%7BtargetHits%3A%20100%7DnearestNeighbor(multiple_embeddings%2C%20first_query)&input.query(first_query)=embed(%23of%20calories%20to%20eat%20to%20lose%20weight)&ranking=multiple_pure_neural_rank",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"search",
-						""
-					],
-					"query": [
-						{
-							"key": "yql",
-							"value": "select%20*%20from%20doc%20where%20%0A%7BtargetHits%3A%20100%7DnearestNeighbor(multiple_embeddings%2C%20first_query)"
-						},
-						{
-							"key": "input.query(first_query)",
-							"value": "embed(%23of%20calories%20to%20eat%20to%20lose%20weight)"
-						},
-						{
-							"key": "ranking",
-							"value": "multiple_pure_neural_rank"
 						}
 					]
 				}
