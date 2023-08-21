@@ -65,21 +65,25 @@ vespa query "yql=select * from doc where {approximate:false,targetHits: 100}near
 ````
 vespa query "yql=select * from doc where {targetHits: 100}nearestNeighbor(embedding, first_query)" "input.query(first_query)=embed(#of calories to eat to lose weight)" "ranking=pure_neural_rank"
 ````
-### Approximate Nearest Neighbor with Query Filter ###
+### Approximate Nearest Neighbor with Filters ###
 ````
 vespa query "yql=select * from doc where {targetHits: 100}nearestNeighbor(embedding, first_query) AND color contains 'yellow'" "input.query(first_query)=embed(#of calories to eat to lose weight)" "ranking=pure_neural_rank"
 ````
 Adding a distanceThreshold:
 ````
-vespa query "yql=select * from doc where {distanceThreshold: 5.0, targetHits: 100}nearestNeighbor(embedding, first_query) AND color contains 'yellow'" "input.query(first_query)=embed(#of calories to eat to lose weight)" "ranking=pure_neural_rank"
+vespa query "yql=select * from doc where {distanceThreshold: 5.2, targetHits: 100}nearestNeighbor(embedding, first_query) AND color contains 'yellow'" "input.query(first_query)=embed(#of calories to eat to lose weight)" "ranking=pure_neural_rank"
 ````
-### Hybrid Sparse and Dense Retrieval Methods ###
+### Hybrid Sparse and Dense Retrieval ###
 ````
 vespa query "yql=select * from doc where {targetHits: 100}nearestNeighbor(embedding, first_query) OR text contains 'exercise'" "type=weakAnd" "ranking=hybrid_rank" "input.query(first_query)=embed(#of calories to eat to lose weight)"
 ````
 Passing weights:
 ````
 vespa query "yql=select * from doc where {targetHits: 100}nearestNeighbor(embedding, first_query) OR text contains 'exercise'" "type=weakAnd" "ranking=hybrid_rank" "input.query(first_query)=embed(#of calories to eat to lose weight)" "ranking.features.query(textWeight)=0.5" "ranking.features.query(vectorWeight)=30"
+````
+### Approximate Nearest Neighbor with Multiple Vectors ###
+````
+vespa query "yql=select * from doc where {targetHits: 100}nearestNeighbor(multiple_embeddings, first_query)" "input.query(first_query)=embed(#of calories to eat to lose weight)" "ranking=multiple_pure_neural_rank"
 ````
 ### Multiple Nearest Neighbor Search Operators in the Same Query ###
 ````
