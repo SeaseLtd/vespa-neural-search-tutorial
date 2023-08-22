@@ -20,7 +20,7 @@ schema doc {
     }
 
     field embedding type tensor<float>(x[384]) {
-        indexing: input text | embed bert | attribute | index
+        indexing: input text | embed hf-embedder | attribute | index
         attribute {
             distance-metric: euclidean
         }
@@ -28,7 +28,7 @@ schema doc {
     }
 
     field multiple_embeddings type tensor<float>(p{}, x[384]) {
-        indexing: input paragraphs | embed bert | attribute | index
+        indexing: input paragraphs | embed hf-embedder | attribute | index
         attribute {
             distance-metric: euclidean
         }

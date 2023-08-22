@@ -5,9 +5,9 @@
     <container id="default" version="1.0">
 
         <!-- See https://docs.vespa.ai/en/reference/embedding-reference.html#custom-embedders -->
-        <component id="bert" type="bert-embedder">
+        <component id="hf-embedder" type="hugging-face-embedder">
             <transformer-model path="model/files/sentence-transformers-all-MiniLM-L6-v2.onnx"/>
-            <tokenizer-vocab path="model/files/vocab.txt"/>
+            <tokenizer-model path="model/files/tokenizer.json"/>
         </component>
 
         <document-api/>
