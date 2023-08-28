@@ -9,9 +9,9 @@ To directly use the existing material, without generating documents and models b
 - vespa-cli 8.171.4
 
 To create documents and models by yourself you also need:
-- python 3.10
-- torch 1.13.1
-- transformers 4.25.1
+- python 3.11
+- torch 2.0.1
+- transformers 4.32.0
 
 ## Repository content ##
 - **[documents](documents)**: contains convert_msmarco_data_to_vespa_format.py python script to generate Vespa documents from MS Marco data.
