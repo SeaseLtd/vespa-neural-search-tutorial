@@ -38,7 +38,7 @@ python convert_msmarco_data_to_vespa_format.py
 ````
 To export the neural model:
 ````
-python export_model_from_hf.py --hf_model sentence-transformers/all-MiniLM-L6-v2 --output_dir files
+python export_hf_model_from_hf.py --hf_model sentence-transformers/all-MiniLM-L6-v2 --output_dir files
 ````
 ### To start Vespa ###
 To start Vespa:
