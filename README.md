@@ -6,7 +6,7 @@ For a step-by-step description read our blog post.
 
 ## Requirements ##
 To directly use the existing material, without generating documents and models by yourself, you only need:
-- vespa-cli 8.171.4
+- vespa-cli 8.263.7
 
 To create documents and models by yourself you also need:
 - python 3.11
@@ -45,7 +45,6 @@ To start Vespa:
 ````
 vespa config set target local
 docker run --detach --name vespa --hostname vespa-container --publish 8080:8080 --publish 19071:19071 vespaengine/vespa
-vespa status deploy --wait 300
 vespa deploy --wait 300
 ````
 To index documents:
@@ -74,14 +73,6 @@ Adding a distanceThreshold:
 ````
 vespa query "yql=select * from doc where {distanceThreshold: 5.2, targetHits: 100}nearestNeighbor(embedding, first_query) AND color contains 'yellow'" "input.query(first_query)=embed(#of calories to eat to lose weight)" "ranking=pure_neural_rank"
 ````
-### Hybrid Sparse and Dense Retrieval ###
-````
-vespa query "yql=select * from doc where {targetHits: 100}nearestNeighbor(embedding, first_query) OR text contains 'exercise'" "type=weakAnd" "ranking=hybrid_rank" "input.query(first_query)=embed(#of calories to eat to lose weight)"
-````
-Passing weights:
-````
-vespa query "yql=select * from doc where {targetHits: 100}nearestNeighbor(embedding, first_query) OR text contains 'exercise'" "type=weakAnd" "ranking=hybrid_rank" "input.query(first_query)=embed(#of calories to eat to lose weight)" "ranking.features.query(textWeight)=0.5" "ranking.features.query(vectorWeight)=30"
-````
 ### Approximate Nearest Neighbor with Multiple Vectors ###
 ````
 vespa query "yql=select * from doc where {targetHits: 100}nearestNeighbor(multiple_embeddings, first_query)" "input.query(first_query)=embed(#of calories to eat to lose weight)" "ranking=multiple_pure_neural_rank"
@@ -93,4 +84,20 @@ vespa query "yql=select * from doc where ({label:'first_query', targetHits:100}n
 With the sum of closenesses as relevance:
 ````
 vespa query "yql=select * from doc where ({label:'first_query', targetHits:100}nearestNeighbor(embedding, first_query)) OR ({label:'second_query', targetHits:100}nearestNeighbor(embedding, second_query))" "ranking=neural_rank_sum_closeness" "input.query(first_query)=embed(#of calories to eat to lose weight)" "input.query(second_query)=embed(diet zone strategy)"
+````
+### Hybrid Sparse and Dense Retrieval ###
+````
+vespa query "yql=select * from doc where {targetHits: 100}nearestNeighbor(embedding, first_query) OR text contains 'exercise'" "type=weakAnd" "ranking=hybrid_rank" "input.query(first_query)=embed(#of calories to eat to lose weight)"
+````
+Passing weights:
+````
+vespa query "yql=select * from doc where {targetHits: 100}nearestNeighbor(embedding, first_query) OR text contains 'exercise'" "type=weakAnd" "ranking=hybrid_rank" "input.query(first_query)=embed(#of calories to eat to lose weight)" "ranking.features.query(textWeight)=0.5" "ranking.features.query(vectorWeight)=30"
+````
+### Normalized hybrid Sparse and Dense Retrieval ###
+````
+vespa query "yql=select * from doc where {targetHits: 100}nearestNeighbor(embedding, first_query) OR text contains 'exercise'" "type=weakAnd" "ranking=normalized_hybrid_rank" "input.query(first_query)=embed(#of calories to eat to lose weight)"
+````
+### Re-ranking with neural search ###
+````
+vespa query "yql=select * from doc where {targetHits: 100}nearestNeighbor(embedding, first_query) OR text contains 'exercise'" "type=weakAnd" "ranking=neural_rerank_profile" "input.query(first_query)=embed(#of calories to eat to lose weight)"
 ````
