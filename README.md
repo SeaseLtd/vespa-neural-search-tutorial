@@ -9,15 +9,16 @@ To directly use the existing material, without generating documents and models b
 - vespa-cli 8.171.4
 
 To create documents and models by yourself you also need:
-- python 3.10
-- torch 1.13.1
-- transformers 4.25.1
+- python 3.11
+- torch 2.0.1
+- transformers 4.32.0
+- onnx 1.14.1
 
 ## Repository content ##
 - **[documents](documents)**: contains convert_msmarco_data_to_vespa_format.py python script to generate Vespa documents from MS Marco data.
   - **[msmarco_documents](documents/msmarco_documents)**: contains the MS Marco data
   - **[vespa_documents](documents/vespa_documents)**: contains the Vespa documents
-- **[model](model)**: contains the export_model.py python script to export the all-MiniLM-L6-v2 sentence transformer from HuggingFace in an ONNX format.
+- **[model](model)**: contains the export_hf_model_from_hf.py python script to export the all-MiniLM-L6-v2 sentence transformer from HuggingFace in an ONNX format.
   - **[files](model/files)**: contains the all-MiniLM-L6-v2 model (minilm-l6-v2.onnx) and its vocabulary (vocab.txt)
 - **[schemas](schemas)**: contains the documents schema
 - **[services-xml](services.xml)**: is the Vespa configuration file that defines the services that make up the application
@@ -37,7 +38,7 @@ python convert_msmarco_data_to_vespa_format.py
 ````
 To export the neural model:
 ````
-python export_model_from_hf.py --hf_model sentence-transformers/all-MiniLM-L6-v2 --output_dir files
+python export_hf_model_from_hf.py --hf_model sentence-transformers/all-MiniLM-L6-v2 --output_dir files
 ````
 ### To start Vespa ###
 To start Vespa:
