@@ -51,7 +51,6 @@ schema doc {
             closeness(label, second_query)
             distance(field, embedding)
         }
-
     }
 
     rank-profile multiple_pure_neural_rank {
@@ -67,7 +66,6 @@ schema doc {
             closeness(field, multiple_embeddings)  
             closest(multiple_embeddings)
         }
-
     }
 
     rank-profile hybrid_rank inherits pure_neural_rank {
@@ -79,6 +77,21 @@ schema doc {
             expression {
                 query(textWeight) * bm25(text) +
                 query(vectorWeight) * closeness(field, embedding)
+            }
+        }
+        match-features {
+            closeness(field, embedding)
+            bm25(text)
+        }
+    }
+
+    rank-profile normalized_hybrid_rank inherits pure_neural_rank {
+        function my_bm25() {
+            expression: bm25(text)
+        }
+        global-phase {
+            expression {
+                normalize_linear(my_bm25) + closeness(field, embedding)
             }
         }
         match-features {
@@ -103,7 +116,19 @@ schema doc {
             closeness(label, first_query) 
             closeness(label, second_query)
         }
-
     }
 
+    rank-profile neural_rerank_profile inherits pure_neural_rank {
+        first-phase {
+            expression: bm25(text)
+        }
+        second-phase {
+            rerank-count: 10
+            expression: closeness(field, embedding)
+        }
+        match-features {
+            closeness(field, embedding)
+            bm25(text)
+        }
+    }
 }
